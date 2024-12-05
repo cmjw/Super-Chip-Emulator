@@ -32,6 +32,14 @@ void Chip8::OP_00EE() {
 }
 
 /**
+ * 0x00FF
+ * Enable high resolution video (128 x 64)
+ */
+void Chip8::OP_00FF() {
+    
+}
+
+/**
  * JUMP (0x1nnn)
  * Jump to the address 0xnnn.
  */
