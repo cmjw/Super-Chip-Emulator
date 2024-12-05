@@ -37,6 +37,7 @@ public:
     uint32_t video[VIDEO_WIDTH * VIDEO_HEIGHT]; // 64x32 video output
     /* monochrome video. each 32-bit pixel is on or off.*/
 
+    /* Original Chip8 Instructions */
     void OP_NULL(); // NULL OP
     void OP_00E0(); // CLS
     void OP_00EE(); // RET
@@ -72,6 +73,18 @@ public:
     void OP_Fx33(); // LD B, Vx
     void OP_Fx55(); // LD [I], Vx
     void OP_Fx65(); // LD Vx, [I]
+
+    /* Super-Chip Instructions */
+    void OP_00CN(); // Scroll down N lines
+    void OP_00FB(); // Scroll right 4 pixels
+    void OP_00FC(); // Scroll left 4 pixels 
+    void OP_00FD(); // Exit interpreter
+    void OP_00FE(); // Disable extended video mode
+    void OP_00FF(); // Enable extended video mode
+    void OP_Dxyn2(); // Modified DRW for SuperChip
+    void OP_Fx30(); // 
+    void OP_Fx75(); //
+    void OP_Fx85(); //
 
 private:
     uint8_t memory[MEMORY_SIZE]; // 4096 bytes of memory
