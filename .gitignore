@@ -396,8 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Etc
 *.o
-chip8_emulator
 /src/SDL2
 /.vscode
 roms/Tetris.ch8
