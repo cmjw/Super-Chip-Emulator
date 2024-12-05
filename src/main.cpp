@@ -1,4 +1,4 @@
-#include "chip8.h"
+#include "schip.h"
 #include "chip8video.h"
 #include <iostream>
 #include <string>
@@ -21,33 +21,33 @@ int main(int argc, char* argv[]) {
 
     Chip8_Video chip8video(VIDEO_WIDTH * videoScale, VIDEO_HEIGHT * videoScale, VIDEO_WIDTH, VIDEO_HEIGHT);
 
-    Chip8 chip8;
-    chip8.LoadROM(ROMfilename);
+    SChip schip;
+    schip.LoadROM(ROMfilename);
 
-    chip8.MemoryDump();
+    schip.MemoryDump();
 
     //return 0;
 
-    int videoPitch = sizeof(chip8.video[0]) * VIDEO_WIDTH;
+    int videoPitch = sizeof(schip.video[0]) * VIDEO_WIDTH;
 
     auto lastCycleTime = std::chrono::high_resolution_clock::now();
 
     bool quit = false;
 
     while (!quit) {
-        quit = chip8video.HandleInput(chip8.keypad);
+        quit = chip8video.HandleInput(schip.keypad);
 
         auto currentTime = std::chrono::high_resolution_clock::now();
         float dt = std::chrono::duration<float, std::chrono::milliseconds::period>(currentTime - lastCycleTime).count();
 
         if (dt > cycleDelay) {
             lastCycleTime = currentTime;
-            chip8.Cycle();
-            chip8video.Update(chip8.video, videoPitch);
+            schip.Cycle();
+            chip8video.Update(schip.video, videoPitch);
         }
     }
 
-    chip8.MemoryDump();
+    schip.MemoryDump();
 
     printf("Quit\n");
     return 0;

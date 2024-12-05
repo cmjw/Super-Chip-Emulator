@@ -7,7 +7,7 @@ LDFLAGS = -lSDL2
 SRC_DIR = src
 DISASSEMBLER_DIR = disassemble
 
-SOURCES = $(SRC_DIR)/chip8.cpp $(SRC_DIR)/op.cpp $(SRC_DIR)/main.cpp $(SRC_DIR)/chip8video.cpp
+SOURCES = $(SRC_DIR)/schip.cpp $(SRC_DIR)/op.cpp $(SRC_DIR)/main.cpp $(SRC_DIR)/chip8video.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = emulator
 

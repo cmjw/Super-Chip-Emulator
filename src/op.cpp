@@ -1,9 +1,9 @@
-#include "chip8.h"
+#include "schip.h"
 
 /**
  * Null OP
  */
-void Chip8::OP_NULL() {
+void SChip::OP_NULL() {
     // do nothing
     printf("Instr: NULL OP\n");
 }
@@ -12,7 +12,7 @@ void Chip8::OP_NULL() {
  * CLS (0x00E0) 
  * Clear the display.
  */
-void Chip8::OP_00E0() {
+void SChip::OP_00E0() {
     printf("Instr: CLS\n");
 
     // set video buffer to zeroes
@@ -23,7 +23,7 @@ void Chip8::OP_00E0() {
  * RET (0x00EE)
  * Return from a subroutine/function.
  */
-void Chip8::OP_00EE() {
+void SChip::OP_00EE() {
     printf("Instr: RET\n");
     printf("SP: %d\n", sp);
 
@@ -35,15 +35,15 @@ void Chip8::OP_00EE() {
  * 0x00FF
  * Enable high resolution video (128 x 64)
  */
-void Chip8::OP_00FF() {
-    
+void SChip::OP_00FF() {
+
 }
 
 /**
  * JUMP (0x1nnn)
  * Jump to the address 0xnnn.
  */
-void Chip8::OP_1nnn() {
+void SChip::OP_1nnn() {
     printf("Instr: JUMP to 0x%03x\n", opcode & 0x0FFFu);
 
     uint16_t address = opcode & 0x0FFFu; // last 3 nibbles
@@ -55,7 +55,7 @@ void Chip8::OP_1nnn() {
  * CALL (0x2nnn)
  * Call the subroutine at adrres 0xnnn.
  */
-void Chip8::OP_2nnn() {
+void SChip::OP_2nnn() {
     printf("Instr: CALL 0x%03x\n", opcode & 0x0FFFu);
 
     uint16_t address = opcode & 0x0FFFu;
@@ -71,7 +71,7 @@ void Chip8::OP_2nnn() {
  * SE (0x3xkk)
  * Skip next instruction if Vx == kk.
  */
-void Chip8::OP_3xkk() {
+void SChip::OP_3xkk() {
     uint8_t x = (opcode & 0x0F00u) >> 8u; // get reg index
     uint8_t byte = opcode & 0x00FFu; // get byte kk
 
@@ -86,7 +86,7 @@ void Chip8::OP_3xkk() {
  * SNE (0x4xkk)
  * Skip next instruction if Vx != kk.
  */
-void Chip8::OP_4xkk() {
+void SChip::OP_4xkk() {
     uint8_t x = (opcode & 0x0F00u) >> 8u; // get reg index
     uint8_t byte = opcode & 0x00FFu;
 
@@ -101,7 +101,7 @@ void Chip8::OP_4xkk() {
  * SE (0x5xy0)
  * Skip next instruction if Vx == Vy.
  */
-void Chip8::OP_5xy0() {
+void SChip::OP_5xy0() {
     uint8_t x = (opcode & 0x0F00u) >> 8u; // Vx index
     uint8_t y = (opcode & 0x00F0u) >> 4u; // Vy index
 
@@ -116,7 +116,7 @@ void Chip8::OP_5xy0() {
  * LD Vx, byte (0x6xkk)
  * Load byte kk into register x.
  */
-void Chip8::OP_6xkk() {
+void SChip::OP_6xkk() {
     uint8_t x = (opcode & 0x0F00u) >> 8u; // get reg index
     uint8_t byte = (opcode & 0x00FFu);
 
@@ -129,7 +129,7 @@ void Chip8::OP_6xkk() {
  * ADD Vx, byte (0x7xkk)
  * Add byte to Vx.
  */
-void Chip8::OP_7xkk() {
+void SChip::OP_7xkk() {
     uint8_t x = (opcode & 0x0F00u) >> 8u; // get reg index
     uint8_t byte = opcode & 0x00FFu; // get byte
 
@@ -142,7 +142,7 @@ void Chip8::OP_7xkk() {
  * LD Vx, Vy
  * Set Vx = Vy.
  */
-void Chip8::OP_8xy0() {
+void SChip::OP_8xy0() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0x00F0u) >> 4u;
 
@@ -155,7 +155,7 @@ void Chip8::OP_8xy0() {
  * OR Vx, Vy
  * Set Vx |= Vy
  */
-void Chip8::OP_8xy1() {
+void SChip::OP_8xy1() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0x00F0u) >> 4u;
 
@@ -168,7 +168,7 @@ void Chip8::OP_8xy1() {
  * AND Vx, Vy
  * Set Vx &= Vy
  */
-void Chip8::OP_8xy2() {
+void SChip::OP_8xy2() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0x00F0u) >> 4u;
 
@@ -181,7 +181,7 @@ void Chip8::OP_8xy2() {
  * XOR Vx, Vy
  * Set Vx |= Vy
  */
-void Chip8::OP_8xy3() {
+void SChip::OP_8xy3() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0x00F0u) >> 4u;
 
@@ -195,7 +195,7 @@ void Chip8::OP_8xy3() {
  * Set Vx = Vx + Vy
  * Set Vf = carry
  */
-void Chip8::OP_8xy4() {
+void SChip::OP_8xy4() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0x00F0u) >> 4u;
 
@@ -213,7 +213,7 @@ void Chip8::OP_8xy4() {
  * Set Vx = Vx - Vy
  * Set = NOT borrow
  */
-void Chip8::OP_8xy5() {
+void SChip::OP_8xy5() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0X00F0u) >> 4u;
 
@@ -229,7 +229,7 @@ void Chip8::OP_8xy5() {
  * Set Vx = Vx SHR 1
  * Set Vf if least sig bit is 1
  */
-void Chip8::OP_8xy6() {
+void SChip::OP_8xy6() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: SHR V%01x\n", x);
@@ -245,7 +245,7 @@ void Chip8::OP_8xy6() {
  * Set Vx = Vy - Vx
  * Set Vf = NOT borrow
  */
-void Chip8::OP_8xy7() {
+void SChip::OP_8xy7() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0x00F0u) >> 4u;
 
@@ -261,7 +261,7 @@ void Chip8::OP_8xy7() {
  * Set Vx = Vx SHL 1
  * Set Vf = LSB of Vx
  */
-void Chip8::OP_8xyE() {
+void SChip::OP_8xyE() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: SHL V%01x\n", x);
@@ -275,7 +275,7 @@ void Chip8::OP_8xyE() {
  * SNE Vx, Vy (0x9xy0)
  * Skip next instruction if Vx != Vy
  */
-void Chip8::OP_9xy0() {
+void SChip::OP_9xy0() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t y = (opcode & 0x00F0u) >> 4u;
 
@@ -290,7 +290,7 @@ void Chip8::OP_9xy0() {
  * LD I, addr
  * Set I = addr. (index register)
  */
-void Chip8::OP_Annn() {
+void SChip::OP_Annn() {
     uint16_t address = opcode & 0x0FFFu;
 
     printf("Instr: LD I, 0x%03x\n", address);
@@ -302,7 +302,7 @@ void Chip8::OP_Annn() {
  * JP V0, addr
  * Jump to address nnn + V0
  */
-void Chip8::OP_Bnnn() {
+void SChip::OP_Bnnn() {
     uint16_t address = opcode & 0x0FFFu;
 
     printf("Instr: JUMP V0, 0x%03x\n", address);
@@ -314,7 +314,7 @@ void Chip8::OP_Bnnn() {
  * RND Vx, byte
  * Set Vx = random byte AND kk
  */
-void Chip8::OP_Cxkk() {
+void SChip::OP_Cxkk() {
     uint8_t x = (opcode & 0x0F00) >> 8u;
     uint8_t byte = opcode & 0x00FFu;
 
@@ -328,7 +328,7 @@ void Chip8::OP_Cxkk() {
  * Display n-byte sprite starting at memory location I at (Vx, Vy).
  * Set set Vf = collision.
  */
-void Chip8::OP_Dxyn() {
+void SChip::OP_Dxyn() {
     uint8_t x = (opcode & 0x0F00u) >> 8u; // get reg index
     uint8_t y = (opcode & 0x00F0u) >> 4u; // get reg index
     uint8_t height = opcode & 0x000Fu;
@@ -364,7 +364,7 @@ void Chip8::OP_Dxyn() {
  * SKP Vx
  * Skip the next instruction if the key with value stored in Vx is pressed.
  */
-void Chip8::OP_Ex9E() {
+void SChip::OP_Ex9E() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t key = V[x];
 
@@ -379,7 +379,7 @@ void Chip8::OP_Ex9E() {
  * SKNP Vx
  * Skip the next instruction if the key with value stored in Vx is not pressed.
  */
-void Chip8::OP_ExA1() {
+void SChip::OP_ExA1() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     uint8_t key = V[x];
 
@@ -394,7 +394,7 @@ void Chip8::OP_ExA1() {
  * LD Vx, DT
  * Set Vx = delay timer value.
  */
-void Chip8::OP_Fx07() {
+void SChip::OP_Fx07() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: LD V%01x, DT\n", x);
@@ -407,7 +407,7 @@ void Chip8::OP_Fx07() {
  * Wait for a key press
  * Store the key value in Vx.
  */
-void Chip8::OP_Fx0A() {
+void SChip::OP_Fx0A() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
 	if (keypad[0]) { V[x] = 0; }
@@ -436,7 +436,7 @@ void Chip8::OP_Fx0A() {
  * LD DT, Vx
  * Set delay timer = Vx
  */
-void Chip8::OP_Fx15() {
+void SChip::OP_Fx15() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: LD DT, V%01x\n", x);
@@ -448,7 +448,7 @@ void Chip8::OP_Fx15() {
  * LD ST, Vx
  * Set sound timer = Vx
  */
-void Chip8::OP_Fx18() {
+void SChip::OP_Fx18() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: LD ST, V%01x\n", x);
@@ -460,7 +460,7 @@ void Chip8::OP_Fx18() {
  * ADD I, Vx
  * Set I = I + Vx
  */
-void Chip8::OP_Fx1E() {
+void SChip::OP_Fx1E() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: I, V%01x\n", x);
@@ -472,7 +472,7 @@ void Chip8::OP_Fx1E() {
  * LD F, Vx
  * Set I = location of sprite for digit Vx
  */
-void Chip8::OP_Fx29() {
+void SChip::OP_Fx29() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
     
     printf("Instr: LD F, V%01x\n", x);
@@ -487,7 +487,7 @@ void Chip8::OP_Fx29() {
  * Store BCD (binary coded decimal) representation of Vx in memory
  * locations I, I+1 and I+2.
  */
-void Chip8::OP_Fx33() {
+void SChip::OP_Fx33() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: LD B, V%01x\n", x);
@@ -510,7 +510,7 @@ void Chip8::OP_Fx33() {
  * LD [I], Vx
  * Store registers V0 to Vx in memory, starting at location I.
  */
-void Chip8::OP_Fx55() {
+void SChip::OP_Fx55() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: LD [I], V%01x\n", x);                   
@@ -524,7 +524,7 @@ void Chip8::OP_Fx55() {
  * LD Vx [I]
  * Read (load) registers V0 to Vx from memory starting at location I.
  */
-void Chip8::OP_Fx65() {
+void SChip::OP_Fx65() {
     uint8_t x = (opcode & 0x0F00u) >> 8u;
 
     printf("Instr: LD V%01x, [I]\n", x);

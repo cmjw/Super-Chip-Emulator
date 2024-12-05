@@ -1,5 +1,5 @@
-#ifndef CHIP8_H
-#define CHIP8_H
+#ifndef SCHIP_H
+#define SCHIP_H
 
 #include <fstream>
 #include <cstdint>
@@ -22,10 +22,10 @@ const unsigned int VIDEO_HEIGHT = 32;
 
 const unsigned int FONTSET_SIZE = 80;
 
-class Chip8 {
+class SChip {
 public:
-    Chip8();
-    ~Chip8();
+    SChip();
+    ~SChip();
 
     void Cycle();
     void LoadROM(const char* filename);
@@ -37,7 +37,7 @@ public:
     uint32_t video[VIDEO_WIDTH * VIDEO_HEIGHT]; // 64x32 video output
     /* monochrome video. each 32-bit pixel is on or off.*/
 
-    /* Original Chip8 Instructions */
+    /* Original SChip Instructions */
     void OP_NULL(); // NULL OP
     void OP_00E0(); // CLS
     void OP_00EE(); // RET
@@ -116,12 +116,12 @@ private:
 	std::uniform_int_distribution<uint8_t> randByte;
 
     // opcode tables
-    typedef void (Chip8::*Chip8Func)();
-    Chip8Func  table[0xF  + 1];
-    Chip8Func table0[0xE  + 1];
-    Chip8Func table8[0xE  + 1];
-    Chip8Func tableE[0xE  + 1];
-    Chip8Func tableF[0x65 + 1];
+    typedef void (SChip::*SChipFunc)();
+    SChipFunc  table[0xF  + 1];
+    SChipFunc table0[0xE  + 1];
+    SChipFunc table8[0xE  + 1];
+    SChipFunc tableE[0xE  + 1];
+    SChipFunc tableF[0x65 + 1];
 
     void LoadOpcodeTables();
     void Table0();
